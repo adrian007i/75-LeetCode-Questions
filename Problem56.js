@@ -1,41 +1,30 @@
-// https://leetcode.com/problems/valid-palindrome/submissions/
-
+// https://leetcode.com/problems/valid-parentheses/
 // input : s : string
-// output : boolean
+// output: boolean
 
+var isValid = function(s) {
+    let stack = [s[0]];
 
-var isPalindrome = function (s) {
-
-    let start = 0;
-    let end = s.length - 1;
-    let alpha_regex = /^[a-zA-Z0-9]+$/
-
-    while (start < end) {
-        let start_char = s[start];
-        let end_char = s[end];
-
-
-        let start_alpha = start_char.match(alpha_regex);
-        let end_alpha = end_char.match(alpha_regex);
-
-
-        // ensure alphanumeric
-        if (start_alpha && end_alpha) { 
-            if (start_char.toLowerCase() !== end_char.toLowerCase())
-                return false; 
-            start++;
-            end--;
-        } 
-        else if (start_alpha)end--;
-        else if (end_alpha) start++;
-        else {start++; end--}
-         
+    let bracket_map = {
+        "(":")",
+        "[":"]",
+        "{":"}"
     }
- 
-    return true;
 
+    for (let i = 1; i < s.length; i++){
 
+        let peak_stack = stack[stack.length - 1];
+        
+        if(bracket_map[peak_stack] === s[i])
+            stack.pop()
+        
+        else
+            stack.push(s[i]);
+    }
+
+    return stack.length === 0
+
+     
 };
 
-
-console.log(isPalindrome(" "));
+console.log(isValid("()[]{}"));
